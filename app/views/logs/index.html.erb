@@ -1,0 +1,28 @@
+<h2>Logs#index</h2>
+
+<table class="list">
+  <thead>
+  <th>path</th>
+  <th>size</th>
+  <th>timestamp</th>
+  <th></th>
+</thead>
+<tbody>
+  <% @logs.each do |log| -%>
+    <tr class="<%= cycle('odd', 'even')%> ">
+      <td>
+        <%= link_to h(log), :action => 'show', :path => log.path %>
+      </td>
+      <td style="text-align: right">
+        <%= log.size %>
+      </td>
+      <td style="text-align: center">
+        <%= format_time(log.timestamp)  %>
+      </td>
+      <td>
+        <%= link_to 'download', :action => 'download', :path => log.path %>
+      </td>
+    </tr>
+  <% end -%>
+</tbody>
+</table>
