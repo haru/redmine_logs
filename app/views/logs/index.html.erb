@@ -16,13 +16,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 %>
-<h2>Logs#index</h2>
+<h2><%= l(:logs) %> </h2>
 
 <table class="list">
   <thead>
-  <th>path</th>
-  <th>size</th>
-  <th>timestamp</th>
+  <th><%=h l(:field_filename) %> </th>
+  <th><%=h l(:field_filesize) %></th>
+  <th><%=h l(:field_updated_on) %></th>
   <th></th>
 </thead>
 <tbody>
