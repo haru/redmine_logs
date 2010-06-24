@@ -24,21 +24,33 @@
   <th><%=h l(:field_filesize) %></th>
   <th><%=h l(:field_updated_on) %></th>
   <th></th>
+  <th></th>
 </thead>
 <tbody>
   <% @logs.each do |log| -%>
     <tr class="<%= cycle('odd', 'even')%> ">
       <td>
+        <% if log.text? %>
         <%= link_to h(log), :action => 'show', :path => log.path %>
+        <% else %>
+        <%=h log %>
+        <% end %>
       </td>
       <td style="text-align: right">
-        <%= log.size %>
+        <%= log.size_str %>
       </td>
       <td style="text-align: center">
         <%= format_time(log.timestamp)  %>
       </td>
       <td>
-        <%= link_to 'download', :action => 'download', :path => log.path %>
+        <span class="icon icon-file">
+        <%= link_to l(:button_download), :action => 'download', :path => log.path %>
+        </span>
+      </td>
+      <td>
+        <span class="icon icon-del">
+        <%= link_to l(:button_delete), {:action => 'delete', :path => log.path}, :confirm => l(:text_are_you_sure) %>
+        </span>
       </td>
     </tr>
   <% end -%>

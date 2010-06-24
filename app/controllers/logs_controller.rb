@@ -17,7 +17,7 @@
 require 'log_file'
 class LogsController < ApplicationController
   unloadable
-  layout 'base'
+  layout 'admin'
   before_filter :require_admin
 
   include RedmineLogs::LogFile
@@ -36,6 +36,11 @@ class LogsController < ApplicationController
   def download
     send_file(params[:path])
 
+  end
+
+  def delete
+    File.delete(params[:path])
+    redirect_to :action => "index"
   end
 
   private

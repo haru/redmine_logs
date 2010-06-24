@@ -28,11 +28,22 @@ module RedmineLogs
         end
 
         def timestamp
-          File.mtime(path)
+          @timestamp ||= File.mtime(path)
         end
 
         def size
-          File.size(path)
+          @size ||= File.size(path)
+        end
+
+        def size_str
+          return "#{size} B" if size < 1024
+          return "#{size / 1024} KB" if size < 1024 * 1024
+          return "#{size / (1024 * 1024)} MB" if size < 1024 * 1024 * 1024
+          return "#{size / (1024 * 1024 * 1024)} GB"
+        end
+
+        def text?
+          false
         end
 
         def to_s
