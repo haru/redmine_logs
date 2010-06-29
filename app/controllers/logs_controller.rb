@@ -26,6 +26,7 @@ class LogsController < ApplicationController
 
   def index
     @logs = log_list(LOGDIR)
+    @logs.sort{|x, y|x.path <=> y.path}
   end
 
 
