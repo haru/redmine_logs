@@ -1,3 +1,12 @@
-= logs
+= Redmine Logs Plugin
 
-Description goes here
+This is a plugin for Redmine which lets you download log files of Redmine from administration page.
+
+http://www.r-labs.org/projects/logs
+
+=== Plugin installation
+
+1. Copy the plugin directory into the vendor/plugins directory.
+
+That's all.
+
