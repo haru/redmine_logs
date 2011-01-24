@@ -48,7 +48,7 @@ class LogsController < ApplicationController
   def log_list(path)
     logs = []
     Dir::foreach(path) do |v|
-      next if v == "." or v == ".."
+      next if v.start_with?('.') #exlude special path (. and ..) and hidden directories
       if path =~ /\/$/
         v = path + v
       else
