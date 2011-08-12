@@ -19,6 +19,7 @@ class LogsController < ApplicationController
   unloadable
   layout 'admin'
   before_filter :require_admin
+  before_filter :require_correct_path, :except => [:index]
 
   include RedmineLogs::LogFile
   
@@ -31,12 +32,12 @@ class LogsController < ApplicationController
 
 
   def show
+    @log = tail(params[:path], 20000)
   end
 
 
   def download
     send_file(params[:path])
-
   end
 
   def delete
@@ -63,4 +64,29 @@ class LogsController < ApplicationController
     end
     logs
   end
+
+  def require_correct_path
+    path = File.expand_path(params[:path])
+    unless path.start_with? LOGDIR
+      render_403
+      return false
+    end
+    true
+  end
+
+  # copy from http://www.hirax.net/diaryweb/2010/03/02.html
+  def tail(filename,readLength)
+    ary=[]
+    f=File.open(filename)
+    begin
+      f.seek(-readLength,IO::SEEK_END)
+    rescue
+    end
+    while f.gets
+      ary<<$_
+    end
+    f.close
+    return ary
+  end
+
 end

@@ -44,6 +44,11 @@
       </td>
       <td>
         <span class="icon icon-file">
+        <%= link_to l(:button_show), :action => 'show', :path => log.path %>
+        </span>
+      </td>
+      <td>
+        <span class="icon icon-file">
         <%= link_to l(:button_download), :action => 'download', :path => log.path %>
         </span>
       </td>
