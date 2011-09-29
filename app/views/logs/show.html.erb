@@ -16,16 +16,35 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 %>
-<style type="text/css">
-  .log {
-    overflow: auto;
-    height: 600px;
-  }
-</style>
+
+<% if @error -%>
+  <div class="flash error"><%= @error -%></div>
+<% end -%>
+
+<div class="contextual">
+  <span class="icon icon-save">
+    <% form_id = "download_id_#{rand(10000)}" -%>
+    <%form_tag({:action => 'download'}, {:id => form_id}) do%>
+      <%= hidden_field_tag :path, @path %>
+      <%= link_to_function l(:button_download),  "$('#{form_id}').submit()"%>
+    <% end -%>
+  </span>
+
+  <span class="icon icon-del">
+    <% form_id = "delete_id_#{rand(10000)}" -%>
+    <%form_tag({:action => 'delete'}, {:id => form_id}) do%>
+      <%= hidden_field_tag :path, @path %>
+      <%= link_to_function l(:button_delete),  "if(#{confirm_javascript_function(l(:text_are_you_sure))}){$('#{form_id}').submit();}"%>
+    <% end -%>
+  </span>
+</div>
 <h2>Log: <%= h(@path) %> </h2>
-<div class="log">
+<div id="redmine_log_show">
   <pre>
     <%= h(@log) %>
   <pre>
 </div>
 
+<% content_for :header_tags do %>
+   <%= stylesheet_link_tag "logs.css", :plugin => "redmine_logs", :media => "screen" %>
+<% end %>
