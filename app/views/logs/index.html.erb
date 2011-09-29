@@ -1,6 +1,6 @@
 <%
 # Logs plugin for Redmine
-# Copyright (C) 2010  Haruyuki Iida
+# Copyright (C) 2010-2011  Haruyuki Iida
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,17 +24,18 @@
   <th><%=h l(:field_filesize) %></th>
   <th><%=h l(:field_updated_on) %></th>
   <th></th>
-  <th></th>
 </thead>
 <tbody>
   <% @logs.each do |log| -%>
     <tr class="<%= cycle('odd', 'even')%> ">
       <td>
-        <% if log.text? %>
-        <%= link_to h(log), :action => 'show', :path => log.path %>
-        <% else %>
-        <%=h log %>
-        <% end %>
+        <span class="icon icon-file">
+          <% form_id = "show_id_#{rand(10000)}" -%>
+          <%form_tag({:action => 'show'}, {:id => form_id}) do%>
+            <%= hidden_field_tag :path, log.path %>
+            <%= link_to_function h(log.path),  "$('#{form_id}').submit()"%>
+          <% end -%>
+        </span>
       </td>
       <td style="text-align: right">
         <%= log.size_str %>
@@ -42,19 +43,22 @@
       <td style="text-align: center">
         <%= format_time(log.timestamp)  %>
       </td>
+      
       <td>
-        <span class="icon icon-file">
-        <%= link_to l(:button_show), :action => 'show', :path => log.path %>
+        <span class="icon icon-save">
+          <% form_id = "download_id_#{rand(10000)}" -%>
+          <%form_tag({:action => 'download'}, {:id => form_id}) do%>
+            <%= hidden_field_tag :path, log.path %>
+            <%= link_to_function l(:button_download),  "$('#{form_id}').submit()"%>
+          <% end -%>
         </span>
-      </td>
-      <td>
-        <span class="icon icon-file">
-        <%= link_to l(:button_download), :action => 'download', :path => log.path %>
-        </span>
-      </td>
-      <td>
+      
         <span class="icon icon-del">
-        <%= link_to l(:button_delete), {:action => 'delete', :path => log.path}, :confirm => l(:text_are_you_sure) %>
+          <% form_id = "delete_id_#{rand(10000)}" -%>
+          <%form_tag({:action => 'delete'}, {:id => form_id}) do%>
+            <%= hidden_field_tag :path, log.path %>
+            <%= link_to_function l(:button_delete),  "if(#{confirm_javascript_function(l(:text_are_you_sure))}){$('#{form_id}').submit();}"%>
+          <% end -%>
         </span>
       </td>
     </tr>

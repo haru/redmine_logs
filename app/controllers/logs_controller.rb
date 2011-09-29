@@ -32,7 +32,8 @@ class LogsController < ApplicationController
 
 
   def show
-    @log = tail(params[:path], 20000)
+    @path = params[:path]
+    @log = tail(@path, 20000)
   end
 
 

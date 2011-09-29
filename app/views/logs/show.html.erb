@@ -1,6 +1,6 @@
 <%
 # Logs plugin for Redmine
-# Copyright (C) 2010  Haruyuki Iida
+# Copyright (C) 2011  Haruyuki Iida
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -22,10 +22,10 @@
     height: 600px;
   }
 </style>
-<h2>Logs#show</h2>
+<h2>Log: <%= h(@path) %> </h2>
 <div class="log">
   <pre>
-    <%= @log %>
+    <%= h(@log) %>
   <pre>
 </div>
 
