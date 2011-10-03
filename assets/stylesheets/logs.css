@@ -21,3 +21,5 @@
     overflow: auto;
     height: 600px;
 }
+
+#admin-menu a.redmine-logs { background-image: url(../images/log.png); }
