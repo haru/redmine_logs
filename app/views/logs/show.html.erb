@@ -32,9 +32,9 @@
 
   <span class="icon icon-del">
     <% form_id = "delete_id_#{rand(10000)}" -%>
-    <%form_tag({:action => 'delete'}, {:id => form_id}) do%>
+    <%= form_tag({:action => 'delete'}, {:id => form_id}) do%>
       <%= hidden_field_tag :path, @path %>
-      <%= link_to_function l(:button_delete),  "if(#{confirm_javascript_function(l(:text_are_you_sure))}){$('#{form_id}').submit();}"%>
+      <%= link_to_function l(:button_delete),  "if(confirm('#{escape_javascript(l(:text_are_you_sure))}')){$('#{form_id}').submit();}"%>
     <% end -%>
   </span>
 </div>

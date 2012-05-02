@@ -23,7 +23,7 @@ class LogsController < ApplicationController
 
   include RedmineLogs::LogFile
   
-  LOGDIR = "#{RAILS_ROOT}/log"
+  LOGDIR = "#{Rails.root.to_s}/log"
 
   def index
     @logs = log_list(LOGDIR)
@@ -33,7 +33,7 @@ class LogsController < ApplicationController
 
   def show
     @path = params[:path]
-    @log = tail(@path, 20000)
+    @log = tail(@path, 20000).join
   end
 
 

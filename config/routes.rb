@@ -15,6 +15,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-ActionController::Routing::Routes.draw do |map|
-  map.connect '/logs/:action', :controller => 'logs'
+RedmineApp::Application.routes.draw do
+  #map.connect '/logs/:action', :controller => 'logs'
+  match 'logs/index', :controller => 'logs', :action => 'index', :via => [:get, :post]
+  match 'logs/show', :controller => 'logs', :action => 'show', :via => [:get, :post]
+  match 'logs/download', :controller => 'logs', :action => 'download', :via => [:get, :post]
+  match 'logs/delete', :controller => 'logs', :action => 'delete', :via => [:get, :post]
 end
