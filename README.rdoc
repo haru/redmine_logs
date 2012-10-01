@@ -6,7 +6,7 @@ http://www.r-labs.org/projects/logs
 
 === Plugin installation
 
-1. Copy the plugin directory into the vendor/plugins directory.
+1. Copy the plugin directory into the plugins directory.
 
 That's all.
 
