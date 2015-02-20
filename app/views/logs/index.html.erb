@@ -33,7 +33,7 @@
 <tbody>
   <% @logs.each do |log| -%>
     <tr class="<%= cycle('odd', 'even')%> ">
-      <td>
+      <td style="text-align: left">
         <span class="icon icon-file">
           <% form_id = "show_id_#{rand(10000)}" -%>
           <%= form_tag({:controller => 'logs', :action => 'show'}, {:id => form_id}) do%>
