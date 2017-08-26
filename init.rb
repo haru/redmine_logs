@@ -23,7 +23,7 @@ Redmine::Plugin.register :redmine_logs do
   author_url 'http://twitter.com/haru_iida'
   url "http://www.r-labs.org/projects/logs" if respond_to?(:url)
   description 'This is a Logs plugin for Redmine'
-  version '0.1.0'
+  version '0.1.1'
   requires_redmine :version_or_higher => '3.0.0'
 
   menu :admin_menu, 'icon redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs
