@@ -1,5 +1,5 @@
 # Logs plugin for Redmine
-# Copyright (C) 2010-2015  Haruyuki Iida
+# Copyright (C) 2010-2017  Haruyuki Iida
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -25,6 +25,6 @@ Redmine::Plugin.register :redmine_logs do
   description 'This is a Logs plugin for Redmine'
   version '0.1.0'
   requires_redmine :version_or_higher => '3.0.0'
-  
-  menu :admin_menu, :redmine_logs, { :controller => 'logs', :action => 'index'}, :caption => :logs
+
+  menu :admin_menu, 'icon redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs
 end
