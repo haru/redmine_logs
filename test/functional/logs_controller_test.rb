@@ -29,9 +29,4 @@ class LogsControllerTest < ActionController::TestCase
     post :show, path: "#{LOGDIR}/foo.log"
     assert_response :success
   end
-
-  def test_delete
-    post :delete, path: "#{LOGDIR}/foo.log"
-    assert_response :redirect
-  end
 end
