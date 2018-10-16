@@ -1,5 +1,6 @@
 # Logs plugin for Redmine
 # Copyright (C) 2010-2017  Haruyuki Iida
+# Copyright (C) 2018       Agileware Inc.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -19,11 +20,10 @@ require 'admin_menu_hooks'
 
 Redmine::Plugin.register :redmine_logs do
   name 'Redmine Logs plugin'
-  author 'Haruyuki Iida'
-  author_url 'http://twitter.com/haru_iida'
-  url "http://www.r-labs.org/projects/logs" if respond_to?(:url)
+  author 'Agileware Inc. (Original author: Haruyuki Iida)'
+  url 'https://github.com/agileware-jp/redmine_logs'
   description 'This is a Logs plugin for Redmine'
-  version '0.1.1'
+  version '0.1.2-aw'
   requires_redmine :version_or_higher => '3.0.0'
 
   menu :admin_menu, 'icon redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs
