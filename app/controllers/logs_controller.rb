@@ -1,5 +1,6 @@
 # Logs plugin for Redmine
 # Copyright (C) 2010-2017  Haruyuki Iida
+# Copyright (C) 2018       Agileware Inc.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -39,19 +40,6 @@ class LogsController < ApplicationController
 
   def download
     send_file(params[:path])
-  end
-
-  def delete
-    begin
-      File.delete(params[:path])
-      redirect_to :action => "index"
-    rescue => e
-      @error = e
-      @logs = log_list(LOGDIR)
-      @logs.sort{|x, y|x.path <=> y.path}
-      render :action => "index"
-    end
-
   end
 
   private

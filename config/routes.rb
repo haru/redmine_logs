@@ -1,5 +1,6 @@
 # Logs plugin for Redmine
 # Copyright (C) 2012  Haruyuki Iida
+# Copyright (C) 2018  Agileware Inc.
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -20,5 +21,4 @@ RedmineApp::Application.routes.draw do
   match 'logs/index', :controller => 'logs', :action => 'index', :via => [:get, :post]
   match 'logs/show', :controller => 'logs', :action => 'show', :via => [:get, :post]
   match 'logs/download', :controller => 'logs', :action => 'download', :via => [:get, :post]
-  match 'logs/delete', :controller => 'logs', :action => 'delete', :via => [:get, :post]
 end
