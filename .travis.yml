@@ -2,12 +2,16 @@ language: ruby
 rvm:
 - 2.2
 - 2.3
+- 2.4
+- 2.5
 env:
 - REDMINE_VER=3.0-stable
 - REDMINE_VER=3.1-stable
 - REDMINE_VER=3.2-stable
 - REDMINE_VER=3.3-stable
 - REDMINE_VER=3.4-stable
+- REDMINE_VER=4.0-stable
+- REDMINE_VER=master
 script:
 - export TESTSPACE=`pwd`/testspace
 - export NAME_OF_PLUGIN=redmine_logs
