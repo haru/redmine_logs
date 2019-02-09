@@ -15,7 +15,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require 'redmine'
-require 'admin_menu_hooks'
+require 'admin_menu_logs_hooks'
 
 Redmine::Plugin.register :redmine_logs do
   name 'Redmine Logs plugin'
@@ -26,5 +26,5 @@ Redmine::Plugin.register :redmine_logs do
   version '0.1.1'
   requires_redmine :version_or_higher => '3.0.0'
 
-  menu :admin_menu, 'icon redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs
+  menu :admin_menu, :redmine_logs, { :controller => 'logs', :action => 'index'}, :caption => :logs, :html => {:class => 'icon'}
 end
