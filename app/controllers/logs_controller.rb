@@ -1,5 +1,5 @@
 # Logs plugin for Redmine
-# Copyright (C) 2010  Haruyuki Iida
+# Copyright (C) 2010-2017  Haruyuki Iida
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -18,11 +18,11 @@ require 'log_file'
 class LogsController < ApplicationController
   unloadable
   layout 'admin'
-  before_filter :require_admin
-  before_filter :require_correct_path, :except => [:index]
+  before_action :require_admin
+  before_action :require_correct_path, :except => [:index]
 
   include RedmineLogs::LogFile
-  
+
   LOGDIR = "#{Rails.root.to_s}/log"
 
   def index
@@ -64,7 +64,7 @@ class LogsController < ApplicationController
       else
         v = path + "/" + v
       end
-      
+
       if FileTest::directory?(v)
         logs = logs + log_list(v)
       else
