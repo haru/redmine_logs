@@ -1,11 +1,11 @@
 language: ruby
 rvm:
-- 2.3
 - 2.4
 - 2.5
 - 2.6
+- 2.7
 env:
-- REDMINE_VER=4.1-stable
+- REDMINE_VER=4.2-stable
 - REDMINE_VER=master
 script:
 - export TESTSPACE=`pwd`/testspace
