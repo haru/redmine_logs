@@ -1,11 +1,9 @@
 require 'simplecov'
-require 'simplecov-rcov'
-require 'coveralls'
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  SimpleCov::Formatter::RcovFormatter,
-  Coveralls::SimpleCov::Formatter
-]
+if ENV['CODECOV_TOKEN']
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
 
 SimpleCov.start do
   root File.expand_path(File.dirname(__FILE__) + '/..')
