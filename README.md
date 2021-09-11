@@ -1,6 +1,6 @@
 [![build](https://github.com/haru/redmine_logs/actions/workflows/build.yml/badge.svg)](https://github.com/haru/redmine_logs/actions/workflows/build.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3fb10c5b2245dd4647e5/maintainability)](https://codeclimate.com/github/haru/redmine_logs/maintainability)
-[![Coverage Status](https://coveralls.io/repos/github/haru/redmine_logs/badge.svg?branch=master)](https://coveralls.io/github/haru/redmine_logs?branch=master)
+[![codecov](https://codecov.io/gh/haru/redmine_logs/branch/develop/graph/badge.svg?token=SKAL5GLHIX)](https://codecov.io/gh/haru/redmine_logs)
 
 # Redmine Logs Plugin
 
