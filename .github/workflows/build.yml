@@ -2,6 +2,7 @@ name: build
 on: [push]
 env:
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -49,11 +50,6 @@ jobs:
         run: bash -x ./build-scripts/install.sh
       - name: Build
         run: bash -x ./build-scripts/build.sh
-      - name: Coveralls GitHub Action
-        if: ${{ matrix.redmine_version == 'master' && matrix.db == 'mysql' }}
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Slack Notification on Failure
         uses: rtCamp/action-slack-notify@v2.0.2
         if: failure()

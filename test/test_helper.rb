@@ -1,16 +1,9 @@
 require 'simplecov'
-require 'simplecov-rcov'
-require 'simplecov-lcov'
 
-SimpleCov::Formatter::LcovFormatter.config do |config|
-  config.report_with_single_file = true
-  config.single_report_path = File.expand_path(File.dirname(__FILE__) + '/../coverage/lcov.info')
+if ENV['CODECOV_TOKEN']
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
-
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  SimpleCov::Formatter::RcovFormatter,
-  SimpleCov::Formatter::LcovFormatter
-]
 
 SimpleCov.start do
   root File.expand_path(File.dirname(__FILE__) + '/..')
