@@ -59,7 +59,6 @@ fi
 # create a link to the backlogs plugin
 ln -sf $PATH_TO_PLUGIN plugins/$NAME_OF_PLUGIN
 
-
 cp "$SCRIPTDIR/database.yml" config/database.yml
 
 

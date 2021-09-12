@@ -1,5 +1,6 @@
 source :rubygems
 
 group :test do
-  gem 'codecov', :require => false
+  gem "simplecov-rcov"
+  gem "simplecov-lcov"
 end
