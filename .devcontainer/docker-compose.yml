@@ -12,7 +12,7 @@ services:
         VARIANT: "2.7"
         # Optional Node.js version to install
         NODE_VERSION: "lts/*"
-        REDMINE_VERSION: "4.2-stable"
+        REDMINE_VERSION: "master"
 
     volumes:
       - ..:/usr/local/redmine/plugins/redmine_logs:cached
