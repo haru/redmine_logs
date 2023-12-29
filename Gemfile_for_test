@@ -1,5 +1,3 @@
-source :rubygems
-
 group :test do
   gem "simplecov-rcov"
   gem "simplecov-lcov"
