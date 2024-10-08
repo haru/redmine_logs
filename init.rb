@@ -16,7 +16,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 require 'redmine'
-require File.expand_path('lib/admin_menu_hooks', __dir__)
+require File.expand_path('../lib/admin_menu_hooks', __FILE__)
 
 Redmine::Plugin.register :redmine_logs do
   name 'Redmine Logs plugin'
