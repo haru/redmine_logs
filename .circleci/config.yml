@@ -1,0 +1,129 @@
+version: 2.1
+
+orbs:
+  redmine-plugin: agileware-jp/redmine-plugin@3.7.0
+  plugin-test:
+    commands:
+      run-tests:
+        parameters:
+          plugin:
+            default: ''
+            description: Plugin name. If unspecified it will be the current repository's plugin.
+            type: string
+          redmine_root:
+            default: redmine
+            description: Directory where redmine is installed
+            type: string
+        steps:
+          - run:
+              name: Setup Database
+              command: 'RAILS_ENV=test bundle exec rake db:migrate redmine:plugins:migrate'
+              working_directory: << parameters.redmine_root >>
+          - run:
+              name: Set tested plugin
+              command: |
+                PLUGIN_NAME='<< parameters.plugin >>'
+                if [ -z $PLUGIN_NAME ]; then
+                  PLUGIN_NAME=$CIRCLE_PROJECT_REPONAME
+                fi
+
+                echo $PLUGIN_NAME >> .tested_plugin
+              working_directory: << parameters.redmine_root >>
+          - run:
+              command: >-
+                RAILS_ENV=test bundle exec rake redmine:plugins:test PLUGIN=`cat .tested_plugin`
+              working_directory: << parameters.redmine_root >>
+jobs:
+  run-tests-git-url:
+    parameters:
+      redmine_git_url:
+        type: string
+      redmine_version:
+        type: string
+      ruby_version:
+        type: string
+      db:
+        type: enum
+        enum: ['mysql', 'pg']
+      db_version:
+        type: string
+    executor:
+      name: redmine-plugin/ruby-<< parameters.db >>
+      ruby_version: << parameters.ruby_version >>
+      db_version: << parameters.db_version >>
+    steps:
+      - checkout
+      - redmine-plugin/download-redmine-git-url:
+          git_url: << parameters.redmine_git_url >>
+          version: << parameters.redmine_version >>
+      - redmine-plugin/install-self
+      - redmine-plugin/generate-database_yml
+      - run:
+          name: Setup Gemfile
+          command: cp Gemfile_for_test Gemfile
+          working_directory: ~/project/redmine/plugins/redmine_logs
+      - redmine-plugin/bundle-install
+      - redmine-plugin/migrate-without-plugins
+      - plugin-test/run-tests
+  run-tests:
+    executor:
+      name: redmine-plugin/ruby-<< parameters.database >>
+      ruby_version: << parameters.ruby_version >>
+      db_version: << parameters.db_version >>
+    parameters:
+      database:
+        enum:
+          - mysql
+          - pg
+          - mariadb
+          - sqlite3
+        type: enum
+      redmine_version:
+        type: string
+      ruby_version:
+        type: string
+      db_version:
+        type: string
+    steps:
+      - checkout
+      - redmine-plugin/download-redmine:
+          version: << parameters.redmine_version >>
+      - redmine-plugin/install-self
+      - redmine-plugin/generate-database_yml
+      - run:
+          name: Setup Gemfile
+          command: cp Gemfile_for_test Gemfile
+          working_directory: ~/project/redmine/plugins/redmine_logs
+      - redmine-plugin/bundle-install
+      - redmine-plugin/migrate-without-plugins
+      - plugin-test/run-tests
+
+default_context: &default_context
+  context:
+    - lychee-ci-environment
+
+workflows:
+  run-tests-workflow:
+    jobs:
+      - run-tests-git-url:
+          !!merge <<: *default_context
+          name: test on Redmine git with PostgreSQL
+          redmine_git_url: $REDMINE_GIT_URL
+          redmine_version: $REDMINE_GIT_REVISION
+          ruby_version: $REDMINE_GIT_RUBY_VERSION
+          db: pg
+          db_version: $POSTGRES_VERSION
+      - run-tests:
+          <<: *default_context
+          name: test on supported maximum versions with PostgreSQL
+          redmine_version: $REDMINE_MAX_VERSION
+          ruby_version: $RUBY_MAX_VERSION
+          database: pg
+          db_version: $POSTGRES_VERSION
+      - run-tests:
+          <<: *default_context
+          name: test on supported minimum versions with MySQL
+          redmine_version: $REDMINE_MIN_VERSION
+          ruby_version: $RUBY_MIN_VERSION
+          database: mysql
+          db_version: $MYSQL_VERSION
