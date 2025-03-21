@@ -16,7 +16,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 $LOAD_PATH.unshift "#{File.dirname(__FILE__)}/lib"
 require 'redmine'
-require 'admin_menu_hooks'
+require 'admin_menu_logs_hooks'
 
 Redmine::Plugin.register :redmine_logs do
   name 'Redmine Logs plugin'
@@ -27,5 +27,5 @@ Redmine::Plugin.register :redmine_logs do
   version '0.3.0'
   requires_redmine :version_or_higher => '3.0.0'
 
-  menu :admin_menu, 'icon redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs
+  menu :admin_menu, :redmine_logs, { :controller => 'logs', :action => 'index'}, :caption => :logs, :html => {:class => 'icon'}
 end
