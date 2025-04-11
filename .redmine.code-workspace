@@ -7,5 +7,7 @@
 			"path": "../../usr/local/redmine"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"svg.preview.background": "custom"
+	}
 }
