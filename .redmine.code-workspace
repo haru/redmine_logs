@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../usr/local/redmine"
+		}
+	],
+	"settings": {
+		"svg.preview.background": "custom"
+	}
+}

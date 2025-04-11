@@ -34,13 +34,13 @@
   <% @logs.each do |log| -%>
     <tr class="<%= cycle('odd', 'even')%> ">
       <td style="text-align: left">
-        <span class="icon icon-file">
-          <% form_id = "show_id_#{rand(10000)}" -%>
-          <%= form_tag({:controller => 'logs', :action => 'show'}, {:id => form_id}) do%>
-            <%= hidden_field_tag :path, log.path %>
-            <%= link_to_function h(log.path),  "$('##{form_id}').submit()"%>
-          <% end -%>
-        </span>
+        <%= sprite_icon('file') %>
+        <% form_id = "show_id_#{rand(10000)}" -%>
+        <%= form_tag({:controller => 'logs', :action => 'show'}, {:id => form_id}) do%>
+          <%= hidden_field_tag :path, log.path %>
+          <%= link_to_function h(log.path),  "$('##{form_id}').submit()"%>
+        <% end -%>
+        
       </td>
       <td style="text-align: right">
         <%= log.size_str %>
@@ -50,20 +50,20 @@
       </td>
       
       <td>
-        <span class="icon icon-save">
-          <% form_id = "download_id_#{rand(10000)}" -%>
-          <%= form_tag({:action => 'download'}, {:id => form_id}) do%>
-            <%= hidden_field_tag :path, log.path %>
-            <%= link_to_function l(:button_download),  "$('##{form_id}').submit()"%>
-          <% end -%>
-        </span>
+        <%= sprite_icon('download') %>
+        <% form_id = "download_id_#{rand(10000)}" -%>
+        <%= form_tag({:action => 'download'}, {:id => form_id}) do%>
+          <%= hidden_field_tag :path, log.path %>
+          <%= link_to_function l(:button_download),  "$('##{form_id}').submit()"%>
+        <% end -%>
+
       
-        <span class="icon icon-del">
-          <% form_id = "delete_id_#{rand(10000)}" -%>
-          <%= form_tag({:action => 'delete'}, {:id => form_id}) do%>
-            <%= hidden_field_tag :path, log.path %>
-            <%= link_to_function l(:button_delete),  "if(confirm('#{escape_javascript(l(:text_are_you_sure))}')){$('##{form_id}').submit();}"%>
-          <% end -%>
+        <%= sprite_icon('del') %>
+        <% form_id = "delete_id_#{rand(10000)}" -%>
+        <%= form_tag({:action => 'delete'}, {:id => form_id}) do%>
+          <%= hidden_field_tag :path, log.path %>
+          <%= link_to_function l(:button_delete),  "if(confirm('#{escape_javascript(l(:text_are_you_sure))}')){$('##{form_id}').submit();}"%>
+        <% end -%>
         </span>
       </td>
     </tr>
