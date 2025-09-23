@@ -1,6 +1,7 @@
 [![build](https://github.com/haru/redmine_logs/actions/workflows/build.yml/badge.svg)](https://github.com/haru/redmine_logs/actions/workflows/build.yml)
 [![Maintainability](https://api.codeclimate.com/v1/badges/3fb10c5b2245dd4647e5/maintainability)](https://codeclimate.com/github/haru/redmine_logs/maintainability)
 [![codecov](https://codecov.io/gh/haru/redmine_logs/branch/develop/graph/badge.svg?token=SKAL5GLHIX)](https://codecov.io/gh/haru/redmine_logs)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/haru/redmine_logs)
 ![Redmine](https://img.shields.io/badge/redmine->=6.0-blue?logo=redmine&logoColor=%23B32024&labelColor=f0f0f0&link=https%3A%2F%2Fwww.redmine.org)
 
 # Redmine Logs Plugin
