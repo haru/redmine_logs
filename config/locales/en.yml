@@ -16,3 +16,15 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 en:
   logs: "Logs"
+  label_logs_view_mode: "Logs Display Mode"
+  label_logs_view_grouped: "Grouped Headings with Tables (Default)"
+  label_logs_view_tabs: "Redmine Standard Tabs"
+  label_logs_view_flat: "Flat / Ungrouped (Traditional)"
+  label_log_category_production: "Production"
+  label_log_category_development: "Development"
+  label_log_category_test: "Test"
+  label_log_category_error: "Error"
+  label_log_category_puma: "Puma"
+  label_log_category_setup: "Setup"
+  label_log_category_others: "Others"
+  label_no_logs_in_category: "No log files in this category."

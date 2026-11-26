@@ -1,72 +1,51 @@
 <%
 # Logs plugin for Redmine
-# Copyright (C) 2010-2011  Haruyuki Iida
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+# Copyright (C) 2010-2023  Haruyuki Iida
 %>
 
 <% if @error -%>
   <div class="flash error"><%= @error -%></div>
 <% end -%>
 
-<h2><%= l(:logs) %> </h2>
+<h2><%= l(:logs) %></h2>
 
-<table class="list">
-  <thead>
-  <th><%=h l(:field_filename) %> </th>
-  <th><%=h l(:field_filesize) %></th>
-  <th><%=h l(:field_updated_on) %></th>
-  <th></th>
-</thead>
-<tbody>
-  <% @logs.each do |log| -%>
-    <tr class="<%= cycle('odd', 'even')%> ">
-      <td style="text-align: left">
-        <%= sprite_icon('file') %>
-        <% form_id = "show_id_#{rand(10000)}" -%>
-        <%= form_tag({:controller => 'logs', :action => 'show'}, {:id => form_id}) do%>
-          <%= hidden_field_tag :path, log.path %>
-          <%= link_to_function h(log.path),  "$('##{form_id}').submit()"%>
-        <% end -%>
-        
-      </td>
-      <td style="text-align: right">
-        <%= log.size_str %>
-      </td>
-      <td style="text-align: center">
-        <%= format_time(log.timestamp)  %>
-      </td>
-      
-      <td>
-        <%= sprite_icon('download') %>
-        <% form_id = "download_id_#{rand(10000)}" -%>
-        <%= form_tag({:action => 'download'}, {:id => form_id}) do%>
-          <%= hidden_field_tag :path, log.path %>
-          <%= link_to_function l(:button_download),  "$('##{form_id}').submit()"%>
-        <% end -%>
+<% if @view_mode == 'tabs' %>
+  <%
+    tabs = LogsController::CATEGORIES.map do |cat|
+      count = (@categorized_logs[cat[:id]] || []).size
+      {
+        name: cat[:id],
+        label: "#{l(cat[:name])} (#{count})",
+        partial: 'logs/tab_content'
+      }
+    end
+  %>
 
-      
-        <%= sprite_icon('del') %>
-        <% form_id = "delete_id_#{rand(10000)}" -%>
-        <%= form_tag({:action => 'delete'}, {:id => form_id}) do%>
-          <%= hidden_field_tag :path, log.path %>
-          <%= link_to_function l(:button_delete),  "if(confirm('#{escape_javascript(l(:text_are_you_sure))}')){$('##{form_id}').submit();}"%>
-        <% end -%>
-        </span>
-      </td>
-    </tr>
-  <% end -%>
-</tbody>
-</table>
+  <div class="tabs">
+    <ul>
+      <% tabs.each do |tab| %>
+        <li>
+          <%= link_to tab[:label], { tab: tab[:name] }, id: "tab-#{tab[:name]}", class: (tab[:name] == @selected_tab ? 'selected' : nil) %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="tab-content" id="tab-content-<%= @selected_tab %>">
+    <%= render partial: 'logs/log_table', locals: { logs: @categorized_logs[@selected_tab] || [] } %>
+  </div>
+
+<% elsif @view_mode == 'flat' %>
+  <%= render partial: 'logs/log_table', locals: { logs: @logs } %>
+
+<% else %>
+  <%# Default: Grouped Headings with Tables %>
+  <% LogsController::CATEGORIES.each do |cat| %>
+    <% cat_logs = @categorized_logs[cat[:id]] || [] %>
+    <h3>
+      <%= l(cat[:name]) %>
+      <span class="count">(<%= cat_logs.size %>)</span>
+    </h3>
+    <%= render partial: 'logs/log_table', locals: { logs: cat_logs } %>
+  <% end %>
+<% end %>
