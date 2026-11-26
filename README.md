@@ -1,8 +1,7 @@
-[![build](https://github.com/haru/redmine_logs/actions/workflows/build.yml/badge.svg)](https://github.com/haru/redmine_logs/actions/workflows/build.yml)
-[![Maintainability](https://api.codeclimate.com/v1/badges/3fb10c5b2245dd4647e5/maintainability)](https://codeclimate.com/github/haru/redmine_logs/maintainability)
-[![codecov](https://codecov.io/gh/haru/redmine_logs/branch/develop/graph/badge.svg?token=SKAL5GLHIX)](https://codecov.io/gh/haru/redmine_logs)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/haru/redmine_logs)
-![Redmine](https://img.shields.io/badge/redmine->=5.0-blue?logo=redmine&logoColor=%23B32024&labelColor=f0f0f0&link=https%3A%2F%2Fwww.redmine.org)
+[![build](https://github.com/Arean82/redmine_logs/actions/workflows/build.yml/badge.svg)](https://github.com/Arean82/redmine_logs/actions/workflows/build.yml)
+[![Redmine](https://img.shields.io/badge/redmine->=5.0-blue?logo=redmine&logoColor=%23B32024&labelColor=f0f0f0&link=https%3A%2F%2Fwww.redmine.org)](https://www.redmine.org)
+[![Ruby](https://img.shields.io/badge/ruby->=3.0-red?logo=ruby&logoColor=white)](https://www.ruby-lang.org)
+[![License: GPL-2.0](https://img.shields.io/badge/License-GPLv2-green.svg)](GPL.txt)
 
 # Redmine Logs Plugin
 
