@@ -17,16 +17,6 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 %>
 
-<!-- TEMP LOGO & HEADER FIX -->
-<div id="header">
-  <div class="logo">
-   <%= image_tag 'log.png', plugin: 'redmine_logs', alt: 'Logs' %>
-  </div>
-  <div class="redmine-logs">
-    <a class="redmine-logs" href="/logs/index">Logs</a>
-  </div>
-</div>
-
 <% if @error -%>
   <div class="flash error"><%= @error -%></div>
 <% end -%>
