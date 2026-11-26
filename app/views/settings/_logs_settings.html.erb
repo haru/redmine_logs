@@ -1,0 +1,9 @@
+<p>
+  <label><%= l(:label_logs_view_mode) %></label>
+  <%= select_tag 'settings[view_mode]',
+        options_for_select([
+          [l(:label_logs_view_grouped), 'grouped'],
+          [l(:label_logs_view_tabs), 'tabs'],
+          [l(:label_logs_view_flat), 'flat']
+        ], @settings['view_mode'] || 'grouped') %>
+</p>

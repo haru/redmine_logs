@@ -27,11 +27,13 @@ Redmine::Plugin.register :redmine_logs do
   version '0.4.0'
   requires_redmine :version_or_higher => '5.0.0'    #changed min compatible version to 5
 
+  settings :default => { 'view_mode' => 'grouped' },
+           :partial => 'settings/logs_settings'
+
   # menu :admin_menu, 'redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs, :icon => 'log-file', :plugin => :redmine_logs
   menu :admin_menu, 'redmine-logs', { :controller => 'logs', :action => 'index' }, 
      :caption => :logs, 
      :icon => 'document', 
-     :html => { :class => 'icon icon-document' },
-     :plugin => :redmine_logs
+     :html => { :class => 'icon icon-document' }
 
 end

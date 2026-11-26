@@ -8,7 +8,7 @@ class LogsControllerTest < Redmine::ControllerTest
   def setup
     User.current = nil
     @request.session[:user_id] = 1 # admin user
-    @test_log = File.join(LOGDIR, 'test_logs_plugin.log')
+    @test_log = File.join(LOGDIR, 'production_test_sample.log')
     File.open(@test_log, 'w') do |f|
       f.puts('Line 1: Hello from Logs test')
       f.puts('Line 2: Test log entry')
@@ -20,7 +20,24 @@ class LogsControllerTest < Redmine::ControllerTest
     File.delete(@test_log) if File.exist?(@test_log)
   end
 
-  def test_index_as_admin
+  def test_index_as_admin_grouped_default
+    Setting.plugin_redmine_logs = { 'view_mode' => 'grouped' }
+    get :index
+    assert_response :success
+    assert_select 'h3', text: /Production/
+    assert_select 'table.list'
+  end
+
+  def test_index_as_admin_tabs_mode
+    Setting.plugin_redmine_logs = { 'view_mode' => 'tabs' }
+    get :index, params: { tab: 'production' }
+    assert_response :success
+    assert_select 'div.tabs ul li a#tab-production'
+    assert_select 'table.list'
+  end
+
+  def test_index_as_admin_flat_mode
+    Setting.plugin_redmine_logs = { 'view_mode' => 'flat' }
     get :index
     assert_response :success
     assert_select 'table.list'

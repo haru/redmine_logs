@@ -9,7 +9,9 @@ This is a Redmine plugin that provides log file management functionality directl
 
 ## Features
 
-- **Browse log files**: View a list of all log files in the Redmine log directory
+- **Categorized log management**: Logs are automatically organized into sections: **Production**, **Puma**, **Development**, **Test**, **Error**, **Setup**, and **Others**
+- **Configurable view modes**: Choose between **Grouped Headings with Tables (default)**, **Redmine Standard Tabs**, or **Flat / Ungrouped (traditional)** via plugin settings
+- **Browse log files**: View a list of all log files in the Redmine log directory with file size and modification timestamps
 - **View log content**: Display the last 20,000 lines of any log file
 - **Download logs**: Download log files directly to your local machine
 - **Delete logs**: Remove log files when they're no longer needed

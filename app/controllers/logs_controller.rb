@@ -24,17 +24,46 @@ class LogsController < ApplicationController
 
   LOGDIR = "#{Rails.root.to_s}/log"
 
+  CATEGORIES = [
+    { id: 'production',  name: :label_log_category_production },
+    { id: 'puma',        name: :label_log_category_puma },
+    { id: 'development', name: :label_log_category_development },
+    { id: 'test',        name: :label_log_category_test },
+    { id: 'error',       name: :label_log_category_error },
+    { id: 'setup',       name: :label_log_category_setup },
+    { id: 'others',      name: :label_log_category_others }
+  ].freeze
+
   def index
     @logs = log_list(LOGDIR)
-    @logs.sort{|x, y|x.path <=> y.path}
-  end
+    @logs.sort! { |x, y| x.path <=> y.path }
 
+    settings = Setting.plugin_redmine_logs || {}
+    @view_mode = settings['view_mode'].presence || 'grouped'
+
+    # Build categorized log map
+    @categorized_logs = {
+      'production'  => [],
+      'puma'        => [],
+      'development' => [],
+      'test'        => [],
+      'error'       => [],
+      'setup'       => [],
+      'others'      => []
+    }
+
+    @logs.each do |log|
+      category = categorize_log(log.path)
+      @categorized_logs[category] << log
+    end
+
+    @selected_tab = params[:tab].presence || 'production'
+  end
 
   def show
     @path = params[:path]
     @log = tail(@path, 20000).join
   end
-
 
   def download
     send_file(params[:path])
@@ -47,27 +76,43 @@ class LogsController < ApplicationController
     rescue => e
       @error = e
       @logs = log_list(LOGDIR)
-      @logs.sort{|x, y|x.path <=> y.path}
+      @logs.sort! { |x, y| x.path <=> y.path }
       render :action => "index"
     end
-
   end
 
   private
+
+  def categorize_log(path)
+    base = File.basename(path).downcase
+
+    if base.start_with?('production')
+      'production'
+    elsif base.start_with?('puma')
+      'puma'
+    elsif base.start_with?('development')
+      'development'
+    elsif base.start_with?('test')
+      'test'
+    elsif base.include?('setup') || base.include?('service')
+      'setup'
+    elsif (base.include?('error') || base.include?('err')) && !base.start_with?('puma')
+      'error'
+    else
+      'others'
+    end
+  end
+
   def log_list(path)
     logs = []
-    Dir::foreach(path) do |v|
-      next if v.start_with?('.') #exlude special path (. and ..) and hidden directories
-      if path =~ /\/$/
-        v = path + v
-      else
-        v = path + "/" + v
-      end
+    Dir.foreach(path) do |v|
+      next if v.start_with?('.') # exclude special path (. and ..) and hidden directories
+      full_path = File.join(path, v)
 
-      if FileTest::directory?(v)
-        logs = logs + log_list(v)
+      if FileTest.directory?(full_path)
+        logs += log_list(full_path)
       else
-        logs << LogFile.new(v)
+        logs << LogFile.new(full_path)
       end
     end
     logs
@@ -75,26 +120,24 @@ class LogsController < ApplicationController
 
   def require_correct_path
     path = File.expand_path(params[:path])
-    unless path.start_with? LOGDIR
+    unless path.start_with?(LOGDIR)
       render_403
       return false
     end
     true
   end
 
-  # copy from http://www.hirax.net/diaryweb/2010/03/02.html
-  def tail(filename,readLength)
-    ary=[]
-    f=File.open(filename)
-    begin
-      f.seek(-readLength,IO::SEEK_END)
-    rescue
+  def tail(filename, read_length)
+    ary = []
+    File.open(filename) do |f|
+      begin
+        f.seek(-read_length, IO::SEEK_END)
+      rescue
+      end
+      while (line = f.gets)
+        ary << line
+      end
     end
-    while f.gets
-      ary<<$_
-    end
-    f.close
-    return ary
+    ary
   end
-
 end
