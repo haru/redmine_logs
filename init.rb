@@ -24,7 +24,7 @@ Redmine::Plugin.register :redmine_logs do
   author_url 'http://twitter.com/haru_iida'
   url "http://www.r-labs.org/projects/logs" if respond_to?(:url)
   description 'This is a Logs plugin for Redmine'
-  version '0.4.0'
+  version '0.5.0'
   requires_redmine :version_or_higher => '5.0.0'    #changed min compatible version to 5
 
   settings :default => { 'view_mode' => 'grouped' },
