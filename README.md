@@ -2,7 +2,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/3fb10c5b2245dd4647e5/maintainability)](https://codeclimate.com/github/haru/redmine_logs/maintainability)
 [![codecov](https://codecov.io/gh/haru/redmine_logs/branch/develop/graph/badge.svg?token=SKAL5GLHIX)](https://codecov.io/gh/haru/redmine_logs)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/haru/redmine_logs)
-![Redmine](https://img.shields.io/badge/redmine->=6.0-blue?logo=redmine&logoColor=%23B32024&labelColor=f0f0f0&link=https%3A%2F%2Fwww.redmine.org)
+![Redmine](https://img.shields.io/badge/redmine->=5.0-blue?logo=redmine&logoColor=%23B32024&labelColor=f0f0f0&link=https%3A%2F%2Fwww.redmine.org)
 
 # Redmine Logs Plugin
 
@@ -14,24 +14,35 @@ This is a Redmine plugin that provides log file management functionality directl
 - **View log content**: Display the last 20,000 lines of any log file
 - **Download logs**: Download log files directly to your local machine
 - **Delete logs**: Remove log files when they're no longer needed
+- **Admin integration**: Clean administration menu item with SVG icon integration
 - **Security**: Restricted to administrators only with path traversal protection
 
 ## Requirements
 
-- **Redmine**: 6.0.0 or higher
-- **Ruby**: Compatible with Ruby 3.1+
+- **Redmine**: 5.0.0 or higher (including Redmine 6.x and 7.x)
+- **Ruby**: Compatible with Ruby 3.0+
 
 ## Installation
 
-1. Copy the plugin directory into the `plugins` directory of your Redmine installation:
+1. Copy or clone the plugin directory into your Redmine `plugins` directory:
    ```bash
-   cd /path/to/redmine
-   git clone https://github.com/haru/redmine_logs.git plugins/redmine_logs
+   cd /path/to/redmine/plugins
+   git clone https://github.com/haru/redmine_logs.git
    ```
 
-2. Restart your Redmine application.
+2. Install dependencies (if needed):
+   ```bash
+   bundle config set --local without 'development test'
+   bundle install
+   bundle exec rake redmine:plugins:migrate RAILS_ENV=production
+   ```
 
-That's all! No database migrations or additional configuration required.
+3. Restart your Redmine application server (e.g. Puma, Unicorn, Passenger):
+   ```bash
+   touch tmp/restart.txt
+   ```
+
+No database migrations are required by this plugin.
 
 ## Usage
 
@@ -48,7 +59,7 @@ That's all! No database migrations or additional configuration required.
 The plugin implements several security measures:
 - Only administrators can access log management functionality
 - All file operations are restricted to the Redmine log directory (`Rails.root/log`)
-- Path traversal attacks are prevented through path validation
+- Path traversal attacks are prevented through strict path validation
 
 ## Development
 
@@ -58,7 +69,6 @@ The plugin implements several security measures:
 bundle exec rake redmine:plugins:test NAME=redmine_logs
 ```
 
-
 ## License
 
 This plugin is released under the GNU General Public License v2 (GPLv2).
@@ -67,12 +77,4 @@ See the [GPL.txt](GPL.txt) file for details.
 ## Author
 
 - **Haruyuki Iida** ([@haru_iida](https://github.com/haru))
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch from `develop` (`git checkout -b feature/my-new-feature develop`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin feature/my-new-feature`)
-5. Create a new Pull Request **against the `develop` branch**
-
+- **Maintainer / Compatibility:** Arean Narrayan
