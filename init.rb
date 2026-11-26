@@ -30,8 +30,8 @@ Redmine::Plugin.register :redmine_logs do
   # menu :admin_menu, 'redmine-logs', { :controller => 'logs', :action => 'index'}, :caption => :logs, :icon => 'log-file', :plugin => :redmine_logs
   menu :admin_menu, 'redmine-logs', { :controller => 'logs', :action => 'index' }, 
      :caption => :logs, 
-     :icon => 'log-file', 
-     :html => { :class => 'icon redmine-logs' },
+     :icon => 'document', 
+     :html => { :class => 'icon icon-document' },
      :plugin => :redmine_logs
 
 end
